@@ -17,7 +17,7 @@
 	
 ## Contents
 
-  * [Getting started](#getting-started)
+  * [Приступая к работе](#приступая-к-работе)
   * [Writing your first bot](#writing-your-first-bot)
     * [Prerequisites](#prerequisites)
     * [A simple echo bot](#a-simple-echo-bot)
