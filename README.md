@@ -67,12 +67,12 @@
   * [Code Template](#code-template)
   * [Bots using this library](#bots-using-this-library)
 
-## Getting started
+## Приступая к работе
 
-This API is tested with Python 3.7-3.11 and Pypy 3.
-There are two ways to install the library:
+Этот API протестирован с Python 3.7-3.11 и Pypy 3.
+Существует два способа установки библиотеки:
 
-* Installation using pip (a Python package manager):
+* Installation using pip (для менеджера пакетов Python):
 
 ```
 $ pip install pyTelegramBotAPI
@@ -84,63 +84,63 @@ $ git clone https://github.com/eternnoir/pyTelegramBotAPI.git
 $ cd pyTelegramBotAPI
 $ python setup.py install
 ```
-or:
+или:
 ```
 $ pip install git+https://github.com/eternnoir/pyTelegramBotAPI.git
 ```
 
-It is generally recommended to use the first option.
+Как правило, рекомендуется использовать первый вариант.
 
-*While the API is production-ready, it is still under development and it has regular updates, do not forget to update it regularly by calling*
+*Хотя API готов к работе, он все еще находится в стадии разработки и регулярно обновляется, не забывайте регулярно обновлять его, вызывая:*
 ```
 pip install pytelegrambotapi --upgrade
 ```
 
-## Writing your first bot
+## Написание своего первого бота
 
-### Prerequisites
+### Предварительные условия
 
-It is presumed that you [have obtained an API token with @BotFather](https://core.telegram.org/bots#botfather). We will call this token `TOKEN`.
-Furthermore, you have basic knowledge of the Python programming language and more importantly [the Telegram Bot API](https://core.telegram.org/bots/api).
+Предполагается, что вы [получили токен API с помощью @BotFather](https://core.telegram.org/bots#botfather ). Мы будем называть этот токен `TOKEN`.
+Кроме того, у вас есть базовые знания языка программирования Python и, что более важно, [API Telegram Bot](https://core.telegram.org/bots/api ).
 
-### A simple echo bot
+### Простой эхо-бот
 
-The TeleBot class (defined in \__init__.py) encapsulates all API calls in a single class. It provides functions such as `send_xyz` (`send_message`, `send_document` etc.) and several ways to listen for incoming messages.
+Класс TeleBot (определенный в \__init__.py ) инкапсулирует все вызовы API в один класс. Он предоставляет такие функции, как `send_xyz` (`send_message`, `send_document` и т.д.) и несколько способов прослушивания входящих сообщений.
 
-Create a file called `echo_bot.py`.
-Then, open the file and create an instance of the TeleBot class.
+Создайте файл с именем `echo_bot.py `.
+Затем откройте файл и создайте экземпляр класса TeleBot.
 ```python
 import telebot
 
-bot = telebot.TeleBot("TOKEN", parse_mode=None) # You can set parse_mode by default. HTML or MARKDOWN
+bot = telebot.TeleBot("TOKEN", parse_mode=None) # Вы можете установить parse_mode по умолчанию. HTML или MARKDOWN
 ```
-*Note: Make sure to actually replace TOKEN with your own API token.*
+*Примечание: Убедитесь, что вы действительно заменили TOKEN своим собственным токеном API.*
 
-After that declaration, we need to register some so-called message handlers. Message handlers define filters which a message must pass. If a message passes the filter, the decorated function is called and the incoming message is passed as an argument.
+После этого объявления нам нужно зарегистрировать некоторые так называемые обработчики сообщений. Обработчики сообщений определяют фильтры, которые должно пройти сообщение. Если сообщение проходит фильтр, вызывается оформленная функция и входящее сообщение передается в качестве аргумента.
 
-Let's define a message handler which handles incoming `/start` and `/help` commands.
+Давайте определим обработчик сообщений, который обрабатывает входящие команды "/start" и "/help".
 ```python
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-	bot.reply_to(message, "Howdy, how are you doing?")
+	bot.reply_to(message, "Привет, как у тебя дела?")
 ```
-A function which is decorated by a message handler __can have an arbitrary name, however, it must have only one parameter (the message)__.
+Функция, которая оформляется обработчиком сообщений __, может иметь произвольное имя, однако у нее должен быть только один параметр (the message)__.
 
-Let's add another handler:
+Давайте добавим еще один обработчик:
 ```python
 @bot.message_handler(func=lambda m: True)
 def echo_all(message):
 	bot.reply_to(message, message.text)
 ```
-This one echoes all incoming text messages back to the sender. It uses a lambda function to test a message. If the lambda returns True, the message is handled by the decorated function. Since we want all messages to be handled by this function, we simply always return True.
+Этот отправитель возвращает все входящие текстовые сообщения обратно отправителю. Он использует лямбда-функцию для проверки сообщения. Если лямбда-выражение возвращает значение True, сообщение обрабатывается оформленной функцией. Поскольку мы хотим, чтобы все сообщения обрабатывались этой функцией, мы просто всегда возвращаем значение True.
 
-*Note: all handlers are tested in the order in which they were declared*
+*Примечание: все обработчики тестируются в том порядке, в котором они были объявлены*
 
-We now have a basic bot which replies a static message to "/start" and "/help" commands and which echoes the rest of the sent messages. To start the bot, add the following to our source file:
+Теперь у нас есть базовый бот, который отвечает статическим сообщением на команды "/start" и "/help" и который повторяет остальные отправленные сообщения. Чтобы запустить бота, добавьте следующее в наш исходный файл:
 ```python
 bot.infinity_polling()
 ```
-Alright, that's it! Our source file now looks like this:
+Готово, вот и все! Наш исходный файл теперь выглядит следующим образом:
 ```python
 import telebot
 
@@ -156,77 +156,77 @@ def echo_all(message):
 
 bot.infinity_polling()
 ```
-To start the bot, simply open up a terminal and enter `python echo_bot.py` to run the bot! Test it by sending commands ('/start' and '/help') and arbitrary text messages.
+Чтобы запустить бота, просто откройте терминал и введите `python echo_bot.py ` чтобы запустить бота! Протестируйте это, отправив команды ('/start' и '/help') и произвольные текстовые сообщения.
 
-## General API Documentation
+## Общая документация по API
 
-### Types
+### Типы
 
-All types are defined in types.py. They are all completely in line with the [Telegram API's definition of the types](https://core.telegram.org/bots/api#available-types), except for the Message's `from` field, which is renamed to `from_user` (because `from` is a Python reserved token). Thus, attributes such as `message_id` can be accessed directly with `message.message_id`. Note that `message.chat` can be either an instance of `User` or `GroupChat` (see [How can I distinguish a User and a GroupChat in message.chat?](#how-can-i-distinguish-a-user-and-a-groupchat-in-messagechat)).
+Все типы определены в types.py . Все они полностью соответствуют [определению типов в Telegram API](https://core.telegram.org/bots/api#available-types ), за исключением поля "from" сообщения, которое переименовано в "from_user" (потому что "from" - это зарезервированный токен Python). Таким образом, к таким атрибутам, как `message_id`, можно получить прямой доступ с помощью `message.message_id`. Обратите внимание, что `message.chat` может быть либо экземпляром `User`, либо `GroupChat` (см. [Как я могу отличить пользователя от GroupChat в message.chat?](#how-can-i-distinguish-a-user-and-a-groupchat-in-messagechat)).
 
-The Message object also has a `content_type`attribute, which defines the type of the Message. `content_type` can be one of the following strings:
+Объект Message также имеет атрибут `content_type', который определяет тип сообщения. `content_type` может быть одной из следующих строк:
 `text`, `audio`, `document`, `photo`, `sticker`, `video`, `video_note`, `voice`, `location`, `contact`, `new_chat_members`, `left_chat_member`, `new_chat_title`, `new_chat_photo`, `delete_chat_photo`, `group_chat_created`, `supergroup_chat_created`, `channel_chat_created`, `migrate_to_chat_id`, `migrate_from_chat_id`, `pinned_message`, `web_app_data`.
 
-You can use some types in one function. Example:
+Вы можете использовать несколько типов в одной функции. Пример:
 
 ```content_types=["text", "sticker", "pinned_message", "photo", "audio"]```
 
-### Methods
+### Методы
 
-All [API methods](https://core.telegram.org/bots/api#available-methods) are located in the TeleBot class. They are renamed to follow common Python naming conventions. E.g. `getMe` is renamed to `get_me` and `sendMessage` to `send_message`.
+Все [методы API](https://core.telegram.org/bots/api#available-methods ) находятся в классе TeleBot. Они переименованы в соответствии с общепринятыми соглашениями об именовании Python. Например, `get Me` переименован в `get_me`, а `send Message` - в `send_message`.
 
-### General use of the API
+### Общее использование API
 
-Outlined below are some general use cases of the API.
+Ниже приведены некоторые общие варианты использования API.
 
-#### Message handlers
-A message handler is a function that is decorated with the `message_handler` decorator of a TeleBot instance. Message handlers consist of one or multiple filters.
-Each filter must return True for a certain message in order for a message handler to become eligible to handle that message. A message handler is declared in the following way (provided `bot` is an instance of TeleBot):
+#### Message handlers/Обработчики сообщений
+Обработчик сообщений - это функция, которая оформлена с помощью декоратора `message_handler` экземпляра TeleBot. Обработчики сообщений состоят из одного или нескольких фильтров.
+Каждый фильтр должен возвращать значение True для определенного сообщения, чтобы обработчик сообщений получил право обрабатывать это сообщение. Обработчик сообщений объявляется следующим образом (при условии, что `bot` является экземпляром TeleBot):
 ```python
 @bot.message_handler(filters)
 def function_name(message):
 	bot.reply_to(message, "This is a message handler")
 ```
-`function_name` is not bound to any restrictions. Any function name is permitted with message handlers. The function must accept at most one argument, which will be the message that the function must handle.
-`filters` is a list of keyword arguments.
-A filter is declared in the following manner: `name=argument`. One handler may have multiple filters.
-TeleBot supports the following filters:
+`function_name` не связано никакими ограничениями. В обработчиках сообщений допускается любое имя функции. Функция должна принимать не более одного аргумента, который будет сообщением, которое функция должна обработать.
+`filters` это список аргументов ключевого слова.
+Фильтр объявляется следующим образом: `name=argument`. Один обработчик может иметь несколько фильтров.
+TeleBot поддерживает следующие фильтры:
 
-|name|argument(s)|Condition|
+|имя|аргумент(ы)|состояние|
 |:---:|---| ---|
-|content_types|list of strings (default `['text']`)|`True` if message.content_type is in the list of strings.|
-|regexp|a regular expression as a string|`True` if `re.search(regexp_arg)` returns `True` and `message.content_type == 'text'` (See [Python Regular Expressions](https://docs.python.org/2/library/re.html))|
-|commands|list of strings|`True` if `message.content_type == 'text'` and `message.text` starts with a command that is in the list of strings.|
-|chat_types|list of chat types|`True` if `message.chat.type` in your filter|
-|func|a function (lambda or function reference)|`True` if the lambda or function reference returns `True`|
+|content_types|список строк (default `['text']`)|`True` if message.content_type is in the list of strings.|
+|regexp|регулярное выражение в виде строки|`True` если `re.search(regexp_arg)` возвращается `True` и `message.content_type == 'text'` (Смотререть [Регулярные выражения Python](https://docs.python.org/2/library/re.html))|
+|commands|список строк|`True` если `message.content_type == 'text'` и `message.text` начинается с команды, которая находится в списке строк.|
+|chat_types|список типов чатов|`True` если `message.chat.type` в вашем фильтре|
+|func|функция (ссылка на лямбду или функцию)|`True`, если ссылка на лямбду или функцию возвращает `True`|
 	
-Here are some examples of using the filters and message handlers:
+Вот несколько примеров использования фильтров и обработчиков сообщений:
 
 ```python
 import telebot
 bot = telebot.TeleBot("TOKEN")
 
-# Handles all text messages that contains the commands '/start' or '/help'.
+# Обрабатывает все текстовые сообщения, содержащие команды '/start' или '/help'.
 @bot.message_handler(commands=['start', 'help'])
 def handle_start_help(message):
 	pass
 
-# Handles all sent documents and audio files
+# Обрабатывает все отправленные документы и аудиофайлы
 @bot.message_handler(content_types=['document', 'audio'])
 def handle_docs_audio(message):
 	pass
 
-# Handles all text messages that match the regular expression
+# Обрабатывает все текстовые сообщения, соответствующие регулярному выражению
 @bot.message_handler(regexp="SOME_REGEXP")
 def handle_message(message):
 	pass
 
-# Handles all messages for which the lambda returns True
+# Обрабатывает все сообщения, для которых лямбда-выражение возвращает значение True
 @bot.message_handler(func=lambda message: message.document.mime_type == 'text/plain', content_types=['document'])
 def handle_text_doc(message):
 	pass
 
-# Which could also be defined as:
+# Который также может быть определен как:
 def test_message(message):
 	return message.document.mime_type == 'text/plain'
 
@@ -234,28 +234,28 @@ def test_message(message):
 def handle_text_doc(message):
 	pass
 
-# Handlers can be stacked to create a function which will be called if either message_handler is eligible
-# This handler will be called if the message starts with '/hello' OR is some emoji
+# Обработчики могут быть объединены для создания функции, которая будет вызвана, если подходит любой из message_handler
+# Этот обработчик будет вызван, если сообщение начинается с '/hello' или является каким-либо эмодзи
 @bot.message_handler(commands=['hello'])
 @bot.message_handler(func=lambda msg: msg.text.encode("utf-8") == SOME_FANCY_EMOJI)
 def send_something(message):
     pass
 ```
-**Important: all handlers are tested in the order in which they were declared**
+**Важно: все обработчики тестируются в том порядке, в котором они были объявлены**
 
-#### Edited Message handler
+#### Обработчик отредактированных сообщений
 Handle edited messages
-`@bot.edited_message_handler(filters) # <- passes a Message type object to your function`
+`@bot.edited_message_handler(filters) # <- передает объект типа сообщения вашей функции`
 
-#### Channel Post handler
+#### Обработчик сообщений канала
 Handle channel post messages
 `@bot.channel_post_handler(filters) # <- passes a Message type object to your function`
 
-#### Edited Channel Post handler
+#### Обработчик сообщений отредактированного канала
 Handle edited channel post messages
 `@bot.edited_channel_post_handler(filters) # <- passes a Message type object to your function`
 
-#### Callback Query Handler
+#### Обработчик запроса обратного вызова
 Handle callback queries
 ```python
 @bot.callback_query_handler(func=lambda call: True)
@@ -263,40 +263,40 @@ def test_callback(call): # <- passes a CallbackQuery type object to your functio
     logger.info(call)
 ```
 
-#### Shipping Query Handler
+#### Обработчик запроса на отправку
 Handle shipping queries
 `@bot.shipping_query_handler() # <- passes a ShippingQuery type object to your function`
 
-#### Pre Checkout Query Handler
+#### Обработчик запросов перед оформлением заказа
 Handle pre checkoupt queries
 `@bot.pre_checkout_query_handler() # <- passes a PreCheckoutQuery type object to your function`
 
-#### Poll Handler
+#### Обработчик опроса
 Handle poll updates
 `@bot.poll_handler() # <- passes a Poll type object to your function`
 
-#### Poll Answer Handler
+#### Обработчик ответов на опрос
 Handle poll answers
 `@bot.poll_answer_handler() # <- passes a PollAnswer type object to your function`
 
-#### My Chat Member Handler
+#### Обработчик моего участника чата
 Handle updates of a the bot's member status in a chat
 `@bot.my_chat_member_handler() # <- passes a ChatMemberUpdated type object to your function`
 
-#### Chat Member Handler
+#### Обработчик участников чата
 Handle updates of a chat member's status in a chat
 `@bot.chat_member_handler() # <- passes a ChatMemberUpdated type object to your function`
 *Note: "chat_member" updates are not requested by default. If you want to allow all update types, set `allowed_updates` in `bot.polling()` / `bot.infinity_polling()` to `util.update_types`*
 
-#### Chat Join Request Handler	
+#### Обработчик запроса на присоединение к чату
 Handle chat join requests using:
 `@bot.chat_join_request_handler() # <- passes ChatInviteLink type object to your function`
 
-### Inline Mode
+### Встроенный режим
 
 More information about [Inline mode](https://core.telegram.org/bots/inline).
 
-#### Inline handler
+#### Встроенный обработчик
 
 Now, you can use inline_handler to get inline queries in telebot.
 
@@ -307,7 +307,7 @@ def query_text(inline_query):
     # Query message is text
 ```
 
-#### Chosen Inline handler
+#### Выбранный встроенный обработчик
 
 Use chosen_inline_handler to get chosen_inline_result in telebot. Don't forgot add the /setinlinefeedback
 command for @Botfather.
@@ -320,7 +320,7 @@ def test_chosen(chosen_inline_result):
     # Process all chosen_inline_result.
 ```
 
-#### Answer Inline Query
+#### Ответить на встроенный запрос
 
 ```python
 @bot.inline_handler(lambda query: query.query == 'text')
@@ -334,13 +334,13 @@ def query_text(inline_query):
 
 ```
 
-### Additional API features
+### Дополнительные функции API
 
-#### Middleware Handlers
+#### Обработчики промежуточного программного обеспечения
 
-A middleware handler is a function that allows you to modify requests or the bot context as they pass through the 
-Telegram to the bot. You can imagine middleware as a chain of logic connection handled before any other handlers are
-executed. Middleware processing is disabled by default, enable it by setting `apihelper.ENABLE_MIDDLEWARE = True`. 
+Обработчик промежуточного программного обеспечения - это функция, которая позволяет вам изменять запросы или контекст бота по мере их передачи через Telegram боту. 
+Вы можете представить промежуточное программное обеспечение как цепочку логических подключений, обрабатываемых до выполнения любых других обработчиков. 
+Обработка промежуточного программного обеспечения по умолчанию отключена, включите ее, установив `api helper.ENABLE_MIDDLEWARE = True`. 
 
 ```python
 apihelper.ENABLE_MIDDLEWARE = True
@@ -357,9 +357,9 @@ def start(message):
 ```
 There are other examples using middleware handler in the [examples/middleware](examples/middleware) directory.
 
-#### Class-based middlewares
-There are class-based middlewares. 
-Basic class-based middleware looks like this:
+#### Промежуточное программное обеспечение на основе классов
+Существует промежуточное программное обеспечение, основанное на классах.
+Базовое промежуточное программное обеспечение на основе классов выглядит следующим образом:
 ```python
 class Middleware(BaseMiddleware):
     def __init__(self):
@@ -374,26 +374,26 @@ class Middleware(BaseMiddleware):
         if exception: # check for exception
             print(exception)
 ```
-Class-based middleware should have to functions: post and pre process.
-So, as you can see, class-based middlewares work before and after handler execution.
-For more, check out in [examples](https://github.com/eternnoir/pyTelegramBotAPI/tree/master/examples/middleware/class_based)	
+Промежуточное программное обеспечение на основе классов должно выполнять следующие функции: post и pre process.
+Итак, как вы можете видеть, промежуточные программы на основе классов работают до и после выполнения обработчика.
+Для получения дополнительной информации ознакомьтесь с разделом [examples](https://github.com/eternnoir/pyTelegramBotAPI/tree/master/examples/middleware/class_based)	
 	
-#### Custom filters
-Also, you can use built-in custom filters. Or, you can create your own filter.	
+#### Пользовательские фильтры
+Кроме того, вы можете использовать встроенные пользовательские фильтры. Или вы можете создать свой собственный фильтр.
 
-[Example of custom filter](https://github.com/eternnoir/pyTelegramBotAPI/blob/master/examples/custom_filters/general_custom_filters.py)
+[Пример пользовательского filter](https://github.com/eternnoir/pyTelegramBotAPI/blob/master/examples/custom_filters/general_custom_filters.py)
 	
-Also, we have examples on them. Check this links:
+Кроме того, у нас есть примеры по ним. Проверьте эти ссылки:
 	
-You can check some built-in filters in source [code](https://github.com/eternnoir/pyTelegramBotAPI/blob/master/telebot/custom_filters.py)
+Вы можете проверить некоторые встроенные фильтры в исходном коде [code](https://github.com/eternnoir/pyTelegramBotAPI/blob/master/telebot/custom_filters.py )
 	
-Example of [filtering by id](https://github.com/eternnoir/pyTelegramBotAPI/blob/master/examples/custom_filters/id_filter_example.py)
+Пример [фильтрация по id](https://github.com/eternnoir/pyTelegramBotAPI/blob/master/examples/custom_filters/id_filter_example.py)
 	
-Example of [filtering by text](https://github.com/eternnoir/pyTelegramBotAPI/blob/master/examples/custom_filters/text_filter_example.py)
+Пример [фильтрация по text](https://github.com/eternnoir/pyTelegramBotAPI/blob/master/examples/custom_filters/text_filter_example.py)
 	
-If you want to add some built-in filter, you are welcome to add it in custom_filters.py file.
+Если вы хотите добавить какой-либо встроенный фильтр, вы можете добавить его в custom_filters.py файл.
 	
-Here is example of creating filter-class:
+Вот пример создания filter-класса:
 	
 ```python
 class IsAdmin(telebot.custom_filters.SimpleCustomFilter):
@@ -403,10 +403,10 @@ class IsAdmin(telebot.custom_filters.SimpleCustomFilter):
     def check(message: telebot.types.Message):
         return bot.get_chat_member(message.chat.id,message.from_user.id).status in ['administrator','creator']
 	
-# To register filter, you need to use method add_custom_filter.
+# Чтобы зарегистрировать фильтр, вам нужно использовать метод add_custom_filter.
 bot.add_custom_filter(IsAdmin())
 	
-# Now, you can use it in handler.
+# Теперь вы можете использовать его в обработчике.
 @bot.message_handler(is_chat_admin=True)
 def admin_of_group(message):
 	bot.send_message(message.chat.id, 'You are admin of this group!')
@@ -421,10 +421,10 @@ import telebot
 TOKEN = '<token_string>'
 tb = telebot.TeleBot(TOKEN)	#create a new Telegram Bot object
 
-# Upon calling this function, TeleBot starts polling the Telegram servers for new messages.
-# - interval: int (default 0) - The interval between polling requests
-# - timeout: integer (default 20) - Timeout in seconds for long polling.
-# - allowed_updates: List of Strings (default None) - List of update types to request 
+# При вызове этой функции TeleBot начинает опрашивать серверы Telegram на наличие новых сообщений.
+# - interval: int (default 0) - Интервал между запросами на опрос
+# - timeout: integer (default 20) - Тайм-аут в секундах для длительного опроса.
+# - allowed_updates: List of Strings (default None) - Список типов обновлений для запроса
 tb.infinity_polling(interval=0, timeout=20)
 
 # getMe
@@ -449,7 +449,7 @@ tb.edit_message_text(new_text, chat_id, message_id)
 # forwardMessage
 tb.forward_message(to_chat_id, from_chat_id, message_id)
 
-# All send_xyz functions which can take a file as an argument, can also take a file_id instead of a file.
+# Все функции send_xyz, которые могут принимать файл в качестве аргумента, также могут принимать file_id вместо файла.
 # sendPhoto
 photo = open('/tmp/photo.png', 'rb')
 tb.send_photo(chat_id, photo)
@@ -506,20 +506,20 @@ file = requests.get('https://api.telegram.org/file/bot{0}/{1}'.format(API_TOKEN,
 
 
 ```
-#### Reply markup
-All `send_xyz` functions of TeleBot take an optional `reply_markup` argument. This argument must be an instance of `ReplyKeyboardMarkup`, `ReplyKeyboardRemove` or `ForceReply`, which are defined in types.py.
+#### Разметка ответа
+Все функции TeleBot `send_xyz` принимают необязательный аргумент `reply_markup`. Этот аргумент должен быть экземпляром `ReplyKeyboardMarkup`, `Reply Keyboard Remove` или `Force Reply`, которые определены в types.py .
 
 ```python
 from telebot import types
 
-# Using the ReplyKeyboardMarkup class
-# It's constructor can take the following optional arguments:
+# Используя класс ReplyKeyboardMarkup
+# Его конструктор может принимать следующие необязательные аргументы:
 # - resize_keyboard: True/False (default False)
 # - one_time_keyboard: True/False (default False)
 # - selective: True/False (default False)
 # - row_width: integer (default 3)
-# row_width is used in combination with the add() function.
-# It defines how many buttons are fit on each row before continuing on the next row.
+# row_width используется в сочетании с функцией add().
+# Он определяет, сколько кнопок помещается в каждой строке, прежде чем переходить к следующей строке.
 markup = types.ReplyKeyboardMarkup(row_width=2)
 itembtn1 = types.KeyboardButton('a')
 itembtn2 = types.KeyboardButton('v')
@@ -527,7 +527,7 @@ itembtn3 = types.KeyboardButton('d')
 markup.add(itembtn1, itembtn2, itembtn3)
 tb.send_message(chat_id, "Choose one letter:", reply_markup=markup)
 
-# or add KeyboardButton one row at a time:
+# или добавляйте кнопки клавиатуры по одной строке за раз:
 markup = types.ReplyKeyboardMarkup()
 itembtna = types.KeyboardButton('a')
 itembtnv = types.KeyboardButton('v')
@@ -543,26 +543,26 @@ The last example yields this result:
 ![ReplyKeyboardMarkup](https://farm3.staticflickr.com/2933/32418726704_9ef76093cf_o_d.jpg "ReplyKeyboardMarkup")
 
 ```python
-# ReplyKeyboardRemove: hides a previously sent ReplyKeyboardMarkup
-# Takes an optional selective argument (True/False, default False)
+# ReplyKeyboardRemove: скрывает ранее отправленную разметку Replykeyboard
+# Принимает необязательный выборочный аргумент (True/False, default False)
 markup = types.ReplyKeyboardRemove(selective=False)
 tb.send_message(chat_id, message, reply_markup=markup)
 ```
 
 ```python
-# ForceReply: forces a user to reply to a message
-# Takes an optional selective argument (True/False, default False)
+# ForceReply: заставляет пользователя ответить на сообщение
+# Принимает необязательный выборочный аргумент (True/False, default False)
 markup = types.ForceReply(selective=False)
-tb.send_message(chat_id, "Send me another word:", reply_markup=markup)
+tb.send_message(chat_id, `Пришли мне еще одно слово:`, reply_markup=markup)
 ```
 ForceReply:
 
 ![ForceReply](https://farm4.staticflickr.com/3809/32418726814_d1baec0fc2_o_d.jpg "ForceReply")
 
 
-### Working with entities
-This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
-Attributes:
+### Работа с сущностями
+Этот объект представляет собой одну специальную сущность в текстовом сообщении. Например, хэштеги, имена пользователей, URL-адреса и т.д.
+Атрибуты:
 * `type`
 * `url`
 * `offset`
@@ -570,34 +570,34 @@ Attributes:
 * `user`
 
 
-**Here's an Example:**`message.entities[num].<attribute>`<br>
-Here `num` is the entity number or order of entity in a reply, for if incase there are multiple entities in the reply/message.<br>
+**Вот пример:**`message.entities[num].<attribute>`<br>
+Здесь `num` - это номер объекта или порядок расположения объектов в ответе, например, в случае, если в ответе/сообщении содержится несколько объектов.<br>
 `message.entities` returns a list of entities object. <br>
 `message.entities[0].type` would give the type of the first entity<br>
 Refer [Bot Api](https://core.telegram.org/bots/api#messageentity) for extra details
 
-## Advanced use of the API
+## Расширенное использование API
 
-### Using local Bot API Sever
-Since version 5.0 of the Bot API, you have the possibility to run your own [Local Bot API Server](https://core.telegram.org/bots/api#using-a-local-bot-api-server).
-pyTelegramBotAPI also supports this feature.
+### Использование локального сервера Bot API
+Начиная с версии 5.0 Bot API, у вас есть возможность запускать свой собственный [локальный сервер Bot API](https://core.telegram.org/bots/api#using-a-local-bot-api-server ).
+pyTelegramBotAPI также поддерживает эту функцию.
 ```python
 from telebot import apihelper
 
 apihelper.API_URL = "http://localhost:4200/bot{0}/{1}"
 ```
-**Important: Like described [here](https://core.telegram.org/bots/api#logout), you have to log out your bot from the Telegram server before switching to your local API server. in pyTelegramBotAPI use `bot.log_out()`**
+**Важно: Как описано [здесь](https://core.telegram.org/bots/api#logout ), вы должны выйти из своего бота с сервера Telegram, прежде чем переключаться на свой локальный API-сервер. в pyTelegramBotAPI используйте `bot.log_out()`**
 
-*Note: 4200 is an example port*
+*Примечание: 4200 - это пример порта*
 
-### Asynchronous TeleBot
-New: There is an asynchronous implementation of telebot.
-To enable this behaviour, create an instance of AsyncTeleBot instead of TeleBot.
+### Асинхронный TeleBot
+Новое: Существует асинхронная реализация telebot.
+Чтобы включить такое поведение, создайте экземпляр AsyncTeleBot вместо TeleBot.
 ```python
 tb = telebot.AsyncTeleBot("TOKEN")
 ```
-Now, every function that calls the Telegram API is executed in a separate asynchronous task.
-Using AsyncTeleBot allows you to do the following:
+Теперь каждая функция, вызывающая Telegram API, выполняется в отдельной асинхронной задаче.
+Использование AsyncTeleBot позволяет вам выполнять следующие действия:
 ```python
 import telebot
 
@@ -609,62 +609,62 @@ async def start_message(message):
 
 ```
 
-See more in [examples](https://github.com/eternnoir/pyTelegramBotAPI/tree/master/examples/asynchronous_telebot)
+Смотрите больше в [примерах](https://github.com/eternnoir/pyTelegramBotAPI/tree/master/examples/asynchronous_telebot )
 
-### Sending large text messages
-Sometimes you must send messages that exceed 5000 characters. The Telegram API can not handle that many characters in one request, so we need to split the message in multiples. Here is how to do that using the API:
+### Отправка больших текстовых сообщений
+Иногда вам необходимо отправлять сообщения, объем которых превышает 5000 символов. API Telegram не может обработать такое количество символов в одном запросе, поэтому нам нужно разделить сообщение на несколько частей. Вот как это сделать с помощью API:
 ```python
 from telebot import util
 large_text = open("large_text.txt", "rb").read()
 
-# Split the text each 3000 characters.
-# split_string returns a list with the splitted text.
+# Разделите текст на 3000 символов.
+# split_string возвращает список с разделенным текстом.
 splitted_text = util.split_string(large_text, 3000)
 
 for text in splitted_text:
 	tb.send_message(chat_id, text)
 ```
 
-Or you can use the new `smart_split` function to get more meaningful substrings:
+Или вы можете использовать новую функцию `smart_split`, чтобы получить более значимые подстроки:
 ```python
 from telebot import util
 large_text = open("large_text.txt", "rb").read()
-# Splits one string into multiple strings, with a maximum amount of `chars_per_string` (max. 4096)
-# Splits by last '\n', '. ' or ' ' in exactly this priority.
-# smart_split returns a list with the splitted text.
+# Разбивает одну строку на несколько строк с максимальным количеством `chars_per_string` (макс. 4096)
+# Разбивается на последние '\n', '. ' или ' ' именно в этом приоритете.
+# smart_split возвращает список с разделенным текстом.
 splitted_text = util.smart_split(large_text, chars_per_string=3000)
 for text in splitted_text:
 	tb.send_message(chat_id, text)
 ```
-### Controlling the amount of Threads used by TeleBot
-The TeleBot constructor takes the following optional arguments:
+### Управление количеством потоков, используемых TeleBot
+Конструктор TeleBot принимает следующие необязательные аргументы:
 
- - threaded: True/False (default True). A flag to indicate whether
-   TeleBot should execute message handlers on it's polling Thread.
+ - threaded: True/False (default True). Флаг, указывающий, должен ли 
+   TeleBot выполнять обработчики сообщений в своем потоке опроса.
 
-### The listener mechanism
-As an alternative to the message handlers, one can also register a function as a listener to TeleBot.
+### Механизм прослушивания
+В качестве альтернативы обработчикам сообщений можно также зарегистрировать функцию в качестве прослушивателя TeleBot.
 
-NOTICE: handlers won't disappear! Your message will be processed both by handlers and listeners. Also, it's impossible to predict which will work at first because of threading. If you use threaded=False, custom listeners will work earlier, after them handlers will be called. 
-Example:
+ОБРАТИТЕ внимание: обработчики не исчезнут! Ваше сообщение будет обработано как обработчиками, так и слушателями. Кроме того, невозможно предсказать, что сработает сначала из-за многопоточности. Если вы используете threaded=False, пользовательские прослушиватели будут работать раньше, после них будут вызваны обработчики.
+Пример:
 ```python
 def handle_messages(messages):
 	for message in messages:
-		# Do something with the message
+		# Сделайте что-нибудь с сообщением
 		bot.reply_to(message, 'Hi')
 
 bot.set_update_listener(handle_messages)
 bot.infinity_polling()
 ```
 
-### Using web hooks
-When using webhooks telegram sends one Update per call, for processing it you should call process_new_messages([update.message]) when you recieve it.
+### Использование веб-крючков
+При использовании webhooks telegram отправляет одно обновление за вызов, для его обработки вы должны вызвать process_new_messages([update.message]), когда получите его.
 
-There are some examples using webhooks in the [examples/webhook_examples](examples/webhook_examples) directory.
+В каталоге [examples/webhook_examples](examples/webhook_examples) есть несколько примеров использования webhooks.
 
-### Logging
-You can use the Telebot module logger to log debug info about Telebot. Use `telebot.logger` to get the logger of the TeleBot module.
-It is possible to add custom logging Handlers to the logger. Refer to the [Python logging module page](https://docs.python.org/2/library/logging.html) for more info.
+### Регистрация
+Вы можете использовать регистратор модуля Telebot для регистрации debuginfo о Telebot. Используйте `telebot.logger`, чтобы получить регистратор модуля TeleBot.
+В регистратор можно добавить пользовательские обработчики ведения журнала. Обратитесь к [странице модуля ведения журнала Python](https://docs.python.org/2/library/logging.html ) для получения дополнительной информации.
 
 ```python
 import logging
@@ -673,10 +673,10 @@ logger = telebot.logger
 telebot.logger.setLevel(logging.DEBUG) # Outputs debug messages to console.
 ```
 
-### Proxy
+### Полномочие
 For sync:
 
-You can use proxy for request. `apihelper.proxy` object will use by call `requests` proxies argument.
+Вы можете использовать прокси-сервер для запроса. объект `api helper.proxy` будет использовать при вызове аргумент прокси-сервера `requests`.
 
 ```python
 from telebot import apihelper
@@ -726,16 +726,16 @@ Result will be:
 
 
 
-## API conformance limitations
+## Ограничения на соответствие API
 * ➕ [Bot API 4.5](https://core.telegram.org/bots/api-changelog#december-31-2019) - No nested MessageEntities and Markdown2 support
 * ➕ [Bot API 4.1](https://core.telegram.org/bots/api-changelog#august-27-2018)   - No Passport support
 * ➕ [Bot API 4.0](https://core.telegram.org/bots/api-changelog#july-26-2018)     - No Passport support
 
 
 ## AsyncTeleBot
-### Asynchronous version of telebot
-We have a fully asynchronous version of TeleBot.
-This class is not controlled by threads. Asyncio tasks are created to execute all the stuff.
+### Асинхронная версия telebot
+У нас есть полностью асинхронная версия TeleBot.
+Этот класс не управляется потоками. Задачи Asyncio создаются для выполнения всего этого.
 
 ### EchoBot
 Echo Bot example on AsyncTeleBot:
@@ -804,34 +804,34 @@ if message.chat.type == "channel":
 
 Bot instances that were idle for a long time might be rejected by the server when sending a message due to a timeout of the last used session. Add `apihelper.SESSION_TIME_TO_LIVE = 5 * 60` to your initialisation to force recreation after 5 minutes without any activity. 
 
-## The Telegram Chat Group
+## Группа чата Telegram
 
 Get help. Discuss. Chat.
 
-* Join the [pyTelegramBotAPI Telegram Chat Group](https://telegram.me/joinchat/Bn4ixj84FIZVkwhk2jag6A)
+* Присоединяйтесь к [группе Telegram-чата pyTelegramBotAPI](https://telegram.me/joinchat/Bn4ixj84FIZVkwhk2jag6A )
 	
 ## Telegram Channel
 
-Join the [News channel](https://t.me/pyTelegramBotAPI). Here we will post releases and updates.
+Присоединяйтесь к [новостному каналу](https://t.me/pyTelegramBotAPI ). Здесь мы будем публиковать релизы и обновления.
 	
-## More examples
+## Еще примеры
 
 * [Echo Bot](https://github.com/eternnoir/pyTelegramBotAPI/blob/master/examples/echo_bot.py)
 * [Deep Linking](https://github.com/eternnoir/pyTelegramBotAPI/blob/master/examples/deep_linking.py)
 * [next_step_handler Example](https://github.com/eternnoir/pyTelegramBotAPI/blob/master/examples/step_example.py)
 
-## Code Template
-Template is a ready folder that contains architecture of basic project.
-Here are some examples of template:
+## Шаблон кода
+Шаблон - это готовая папка, содержащая архитектуру базового проекта.
+Вот несколько примеров шаблона:
 	
 * [AsyncTeleBot template](https://github.com/coder2020official/asynctelebot_template)
 * [TeleBot template](https://github.com/coder2020official/telebot_template)
 	
 	
-## Bots using this library
-* [SiteAlert bot](https://telegram.me/SiteAlert_bot) ([source](https://github.com/ilteoood/SiteAlert-Python)) by *ilteoood* - Monitors websites and sends a notification on changes
+## Боты, использующие эту библиотеку
+* [SiteAlert bot](https://telegram.me/SiteAlert_bot) ([source](https://github.com/ilteoood/SiteAlert-Python)) by *ilteoood* - Отслеживает веб-сайты и отправляет уведомления об изменениях
 * [TelegramLoggingBot](https://github.com/aRandomStranger/TelegramLoggingBot) by *aRandomStranger*
-* [Telegram LMGTFY_bot](https://github.com/GabrielRF/telegram-lmgtfy_bot) by *GabrielRF* - Let me Google that for you.
+* [Telegram LMGTFY_bot](https://github.com/GabrielRF/telegram-lmgtfy_bot) by *GabrielRF* - Позвольте мне погуглить это для вас.
 * [Telegram Proxy Bot](https://github.com/mrgigabyte/proxybot) by *mrgigabyte* 
 * [RadRetroRobot](https://github.com/Tronikart/RadRetroRobot) by *Tronikart* - Multifunctional Telegram Bot RadRetroRobot.
 * [League of Legends bot](https://telegram.me/League_of_Legends_bot) ([source](https://github.com/i32ropie/lol)) by *i32ropie*
@@ -885,11 +885,11 @@ Here are some examples of template:
 * [hydrolib_bot](https://github.com/Mayson90/hydrolib_bot) Toolset for Hydrophilia tabletop game (game cards, rules, structure...).
 * [Gugumoe-bot](http://t.me/gugumoe_bot) ([source](https://github.com/GooGuJiang/Gugumoe-bot)) by [咕谷酱](https://gmoe.cc) GuXiaoJiang is a multi-functional robot, such as OSU game information query, IP test, animation screenshot search and other functions.
 * [Feedback-bot](https://github.com/coder2020official/feedbackbot) A feedback bot for user-admin communication. Made on AsyncTeleBot, using [template](https://github.com/coder2020official/asynctelebot_template).
-* [TeleServ](https://github.com/ablakely/TeleServ) by [ablakely](https://github.com/ablakely) This is a Telegram to IRC bridge which links as an IRC server and makes Telegram users appear as native IRC users.
-* [Simple Store Bot](https://github.com/AntonGlyzin/myshopbot) by [Anton Glyzin](https://github.com/AntonGlyzin) This is a simple telegram-store with an admin panel. Designed according to a template.
+* [TeleServ](https://github.com/ablakely/TeleServ) by [ablakely](https://github.com/ablakely) Это мост Telegram к IRC, который подключается как IRC-сервер и позволяет пользователям Telegram выглядеть как обычные пользователи IRC.
+* [Simple Store Bot](https://github.com/AntonGlyzin/myshopbot) by [Anton Glyzin](https://github.com/AntonGlyzin) Это простой telegram-магазин с админ-панелью. Разработан в соответствии с шаблоном.
 * [Media Rating Bot](https://t.me/mediaratingbot) ([source](https://github.com/CommanderCRM/MediaRatingBot))by [CommanderCRM](https://github.com/CommanderCRM). This bot aggregates media (movies, TV series, etc.) ratings from IMDb, Rotten Tomatoes, Metacritic, TheMovieDB, FilmAffinity and also provides number of votes of said media on IMDb. 
 * [Spot Seek Bot](https://t.me/SpotSeekBot) ([source](https://github.com/arashnm80/spot-seek-bot)) by [Arashnm80](https://github.com/arashnm80). This is a free & open source telegram bot for downloading tracks, albums or playlists from spotify.
 * [CalendarIT Bot](https://t.me/calendarit_bot) ([source](https://github.com/codebyzen/CalendarIT_Telegram_Bot))by [CodeByZen](https://github.com/codebyzen). A simple, but extensible Python Telegram bot, can post acquainted with what is happening today, tomorrow or what happened 20 years ago to channel. 
 * [DownloadMusicBOT](https://github.com/fcoagz/DownloadMusicBOT) by *Francisco Griman* - It is a simple bot that downloads audio from YouTube videos on Telegram.
 
-**Want to have your bot listed here? Just make a pull request. Only bots with public source code are accepted.**
+**Хотите, чтобы ваш бот был указан здесь? Просто сделайте запрос на извлечение. Принимаются только боты с общедоступным исходным кодом.**
